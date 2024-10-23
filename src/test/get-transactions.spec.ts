@@ -1,17 +1,21 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import { app } from "../app";
 import { prisma } from "../lib/prisma";
 import { Transaction } from "@prisma/client";
 import { Decimal } from "@prisma/client/runtime/library";
+import { execSync } from "child_process";
 
 describe("Get Transactions", () => {
   beforeAll(async () => {
     await app.ready();
   });
 
+  beforeEach(async () => {
+    execSync("npx prisma migrate reset --force");
+  });
+
   afterAll(async () => {
-    await prisma.transaction.deleteMany();
     await app.close();
   });
 
