@@ -13,5 +13,18 @@ services:
     volumes:
       - ./.postgres-data:/var/lib/postgresql/data
 
+  postgres_test:
+    image: postgres:latest
+    container_name: api-rest-node-test
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: test_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./.postgres-test-data:/var/lib/postgresql/data
+
 volumes:
   .postgres-data:
+  .postgres-test-data:
